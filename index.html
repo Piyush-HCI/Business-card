@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Piyush Punjwani - Product & UX Designer">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Piyush Card">
+    <title>Piyush Punjwani - Business Card</title>
+    
+    <!-- Link to manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-slideUp {
+            animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.25s ease-out;
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @media (orientation: portrait) {
+            .rotate-message {
+                display: flex;
+            }
+            .card-container {
+                display: none;
+            }
+        }
+        @media (orientation: landscape) {
+            .rotate-message {
+                display: none;
+            }
+            .card-container {
+                display: flex;
+            }
+        }
+        body {
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden">
+    <!-- Rotation message for portrait mode -->
+    <div class="rotate-message fixed inset-0 bg-slate-900 flex items-center justify-center z-50 flex-col text-white text-center p-8">
+        <div class="text-6xl mb-4">📱</div>
+        <h2 class="text-2xl font-bold mb-2">Please rotate your device</h2>
+        <p class="text-slate-400">This business card is optimized for landscape view</p>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="card-container min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 items-center justify-center p-4 overflow-hidden">
+        <div class="w-full max-w-5xl">
+            <!-- Main Card -->
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden">
+                <div class="grid grid-cols-5 gap-0">
+                    <!-- Left Section - Main Info -->
+                    <div class="col-span-3 p-8 border-r border-slate-700">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h1 class="text-4xl font-bold text-white mb-2 tracking-tight">Piyush Punjwani</h1>
+                                <div class="h-1 w-24 bg-gradient-to-r from-blue-500 to-blue-600 mb-3"></div>
+                                <p class="text-xl text-blue-400 font-semibold mb-1">Product & UX Designer</p>
+                                <p class="text-sm text-slate-400">MSc UX Design • 1 Year Experience</p>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Sections -->
+                        <div class="grid grid-cols-3 gap-3 mb-6">
+                            <button 
+                                onclick="openPopup('experience')"
+                                class="group bg-slate-700 hover:bg-slate-600 border border-slate-600 hover:border-blue-500 text-white p-4 rounded-xl transition-all transform hover:scale-105 active:scale-95"
+                            >
+                                <i data-lucide="briefcase" class="mx-auto mb-2 w-6 h-6 group-hover:text-blue-400 transition-colors"></i>
+                                <p class="font-semibold text-sm">Experience</p>
+                            </button>
+                            <button 
+                                onclick="openPopup('education')"
+                                class="group bg-slate-700 hover:bg-slate-600 border border-slate-600 hover:border-blue-500 text-white p-4 rounded-xl transition-all transform hover:scale-105 active:scale-95"
+                            >
+                                <i data-lucide="graduation-cap" class="mx-auto mb-2 w-6 h-6 group-hover:text-blue-400 transition-colors"></i>
+                                <p class="font-semibold text-sm">Education</p>
+                            </button>
+                            <button 
+                                onclick="openPopup('skills')"
+                                class="group bg-slate-700 hover:bg-slate-600 border border-slate-600 hover:border-blue-500 text-white p-4 rounded-xl transition-all transform hover:scale-105 active:scale-95"
+                            >
+                                <i data-lucide="code" class="mx-auto mb-2 w-6 h-6 group-hover:text-blue-400 transition-colors"></i>
+                                <p class="font-semibold text-sm">Skills</p>
+                            </button>
+                        </div>
+
+                        <!-- Contact Toggle -->
+                        <div class="border-t border-slate-700 pt-4">
+                            <button
+                                onclick="toggleContact()"
+                                class="w-full flex items-center justify-between px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors border border-slate-600"
+                            >
+                                <span class="font-semibold flex items-center gap-2">
+                                    <i data-lucide="eye" id="eye-icon" class="w-5 h-5 text-blue-400"></i>
+                                    <span>Contact Information</span>
+                                </span>
+                                <span class="text-xs text-slate-400" id="contact-toggle-text">Show</span>
+                            </button>
+
+                            <div id="contact-section" class="mt-3 space-y-2 hidden animate-fadeIn">
+                                <div class="flex items-center justify-between bg-slate-700 bg-opacity-50 p-3 rounded-lg border border-slate-600">
+                                    <div class="flex items-center gap-2 flex-1 min-w-0">
+                                        <i data-lucide="mail" class="text-blue-400 w-5 h-5 flex-shrink-0"></i>
+                                        <a href="mailto:piyushap6060@gmail.com" class="text-slate-300 hover:text-blue-400 transition-colors text-sm truncate">
+                                            piyushap6060@gmail.com
+                                        </a>
+                                    </div>
+                                    <button
+                                        onclick="copyToClipboard('piyushap6060@gmail.com', 'email')"
+                                        id="copy-email"
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors flex-shrink-0 ml-2"
+                                    >
+                                        Copy
+                                    </button>
+                                </div>
+
+                                <div class="flex items-center justify-between bg-slate-700 bg-opacity-50 p-3 rounded-lg border border-slate-600">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="phone" class="text-blue-400 w-5 h-5"></i>
+                                        <a href="tel:+919110240603" class="text-slate-300 hover:text-blue-400 transition-colors text-sm">
+                                            +91 91102 40603
+                                        </a>
+                                    </div>
+                                    <button
+                                        onclick="copyToClipboard('+91 91102 40603', 'phone')"
+                                        id="copy-phone"
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors"
+                                    >
+                                        Copy
+                                    </button>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://www.piyush-uxd.com" target="_blank" rel="noopener noreferrer" 
+                                        class="flex items-center gap-2 bg-slate-700 bg-opacity-50 p-3 rounded-lg border border-slate-600 hover:border-blue-500 transition-colors">
+                                        <i data-lucide="globe" class="text-blue-400 w-5 h-5"></i>
+                                        <span class="text-slate-300 text-sm">Portfolio</span>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/piyush-uiux/" target="_blank" rel="noopener noreferrer"
+                                        class="flex items-center gap-2 bg-slate-700 bg-opacity-50 p-3 rounded-lg border border-slate-600 hover:border-blue-500 transition-colors">
+                                        <i data-lucide="linkedin" class="text-blue-400 w-5 h-5"></i>
+                                        <span class="text-slate-300 text-sm">LinkedIn</span>
+                                    </a>
+                                </div>
+
+                                <div class="text-center text-sm text-slate-400 pt-1">
+                                    <p>📍 Bangalore, India</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Section - QR Code -->
+                    <div class="col-span-2 bg-gradient-to-br from-blue-900 to-blue-950 p-8 flex flex-col items-center justify-center">
+                        <div class="text-center mb-4">
+                            <p class="text-blue-200 text-sm font-semibold mb-1">Scan to view</p>
+                            <p class="text-white text-lg font-bold">My Portfolio</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-lg float-animation">
+                            <!-- Replace 'qr-code.png' below with your actual QR code filename -->
+                            <img src="qr-code.png" alt="Portfolio QR Code" class="w-44 h-44 object-contain rounded-lg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="w-44 h-44 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center" style="display:none;">
+                                <div class="text-center">
+                                    <i data-lucide="globe" class="mx-auto mb-2 text-blue-600 w-12 h-12"></i>
+                                    <p class="text-blue-800 text-xs font-semibold">QR Code</p>
+                                    <p class="text-blue-600 text-xs mt-1">Add your QR here</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <p class="text-blue-200 text-xs">www.piyush-uxd.com</p>
+                        </div>
+                        
+                        <div class="mt-6 text-center">
+                            <div class="inline-block px-3 py-1 bg-blue-800 bg-opacity-50 rounded-full">
+                                <p class="text-blue-200 text-xs font-semibold">Open for Opportunities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popup-modal" class="fixed inset-0 bg-black bg-opacity-60 items-end justify-center z-50 hidden">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-t-3xl w-full max-w-3xl max-h-[85vh] overflow-y-auto animate-slideUp shadow-2xl border-t-4 border-blue-400">
+            <div class="sticky top-0 bg-gradient-to-r from-slate-800 to-slate-900 text-white p-5 rounded-t-3xl flex justify-between items-center border-b border-slate-700">
+                <div class="flex items-center gap-3">
+                    <i id="popup-icon" data-lucide="briefcase" class="text-blue-400 w-7 h-7"></i>
+                    <h3 id="popup-title" class="text-2xl font-bold">Title</h3>
+                </div>
+                <button onclick="closePopup()" class="p-2 hover:bg-slate-700 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="popup-content" class="p-6">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        let contactVisible = false;
+
+        function toggleContact() {
+            contactVisible = !contactVisible;
+            const section = document.getElementById('contact-section');
+            const eyeIcon = document.getElementById('eye-icon');
+            const toggleText = document.getElementById('contact-toggle-text');
+            
+            if (contactVisible) {
+                section.classList.remove('hidden');
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+                toggleText.textContent = 'Hide';
+            } else {
+                section.classList.add('hidden');
+                eyeIcon.setAttribute('data-lucide', 'eye');
+                toggleText.textContent = 'Show';
+            }
+            lucide.createIcons();
+        }
+
+        function copyToClipboard(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById(`copy-${type}`);
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        const popupData = {
+            experience: {
+                title: 'Professional Experience',
+                icon: 'briefcase',
+                content: `
+                    <div class="mb-6 bg-slate-800 p-4 rounded-lg border border-slate-700">
+                        <h4 class="font-bold text-lg text-white">UI/UX Design Intern</h4>
+                        <p class="text-blue-400 font-semibold">IceTea Media Group</p>
+                        <p class="text-sm text-slate-400 mb-3">Jan 2023 - Jun 2023</p>
+                        <ul class="space-y-2">
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Led UI overhaul for Auction Journal (48 screens)</span>
+                            </li>
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Designed mobile health-tracking app (LNRS)</span>
+                            </li>
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Redesigned KREO Design website</span>
+                            </li>
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Conducted user research for healthcare platform</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                        <h4 class="font-bold text-lg text-white">UI Design & Development Intern</h4>
+                        <p class="text-blue-400 font-semibold">Acalvio Technologies</p>
+                        <p class="text-sm text-slate-400 mb-3">Apr 2022 - Jun 2022</p>
+                        <ul class="space-y-2">
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Built design system for ShadowPlex platform</span>
+                            </li>
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Implemented responsive UI components</span>
+                            </li>
+                            <li class="text-slate-300 text-sm flex items-start">
+                                <span class="text-blue-400 mr-2">→</span>
+                                <span>Conducted heuristic evaluation</span>
+                            </li>
+                        </ul>
+                    </div>
+                `
+            },
+            education: {
+                title: 'Education',
+                icon: 'graduation-cap',
+                content: `
+                    <div class="mb-6 p-5 bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg border border-slate-600">
+                        <h4 class="font-bold text-lg text-white">MSc User Experience Design</h4>
+                        <p class="text-blue-400 font-semibold">Loughborough University</p>
+                        <p class="text-sm text-slate-300">Dec 2024</p>
+                        <p class="text-xs text-green-400 font-semibold mt-2 bg-green-500 bg-opacity-10 px-2 py-1 rounded inline-block">Recently Graduated</p>
+                    </div>
+                    <div class="p-5 bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg border border-slate-600">
+                        <h4 class="font-bold text-lg text-white">BVoc UI & Interaction Engineering</h4>
+                        <p class="text-blue-400 font-semibold">Srishti Manipal Institute (MAHE)</p>
+                        <p class="text-sm text-slate-300">Jun 2023</p>
+                        <p class="text-sm text-slate-300 mt-1">CGPA: 7.92 (A+)</p>
+                    </div>
+                `
+            },
+            skills: {
+                title: 'Skills & Expertise',
+                icon: 'code',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-bold text-white mb-3 text-sm uppercase tracking-wider">Design & Research</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 bg-blue-500 bg-opacity-20 text-blue-300 border border-blue-500 border-opacity-30 rounded-lg text-sm">Product Design & Strategy</span>
+                                <span class="px-3 py-1.5 bg-blue-500 bg-opacity-20 text-blue-300 border border-blu
