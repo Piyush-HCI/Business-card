@@ -53,18 +53,35 @@
         }
         @media (orientation: portrait) {
             .rotate-message {
-                display: flex;
+                display: flex !important;
             }
             .card-container {
-                display: none;
+                display: none !important;
             }
         }
         @media (orientation: landscape) {
             .rotate-message {
-                display: none;
+                display: none !important;
             }
             .card-container {
-                display: flex;
+                display: flex !important;
+            }
+        }
+        /* Fallback for browsers that don't support orientation */
+        @media (max-aspect-ratio: 1/1) {
+            .rotate-message {
+                display: flex !important;
+            }
+            .card-container {
+                display: none !important;
+            }
+        }
+        @media (min-aspect-ratio: 1/1) {
+            .rotate-message {
+                display: none !important;
+            }
+            .card-container {
+                display: flex !important;
             }
         }
         body {
@@ -78,7 +95,10 @@
     <div class="rotate-message fixed inset-0 bg-slate-900 flex items-center justify-center z-50 flex-col text-white text-center p-8">
         <div class="text-6xl mb-4">📱</div>
         <h2 class="text-2xl font-bold mb-2">Please rotate your device</h2>
-        <p class="text-slate-400">This business card is optimized for landscape view</p>
+        <p class="text-slate-400 mb-4">This business card is optimized for landscape view</p>
+        <button onclick="forceShowCard()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold">
+            View Anyway
+        </button>
     </div>
 
     <!-- Main Card Container -->
@@ -245,6 +265,11 @@
 
         let contactVisible = false;
 
+        function forceShowCard() {
+            document.querySelector('.rotate-message').style.display = 'none';
+            document.querySelector('.card-container').style.display = 'flex';
+        }
+
         function toggleContact() {
             contactVisible = !contactVisible;
             const section = document.getElementById('contact-section');
@@ -335,19 +360,4 @@
                     </div>
                     <div class="p-5 bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg border border-slate-600">
                         <h4 class="font-bold text-lg text-white">BVoc UI & Interaction Engineering</h4>
-                        <p class="text-blue-400 font-semibold">Srishti Manipal Institute (MAHE)</p>
-                        <p class="text-sm text-slate-300">Jun 2023</p>
-                        <p class="text-sm text-slate-300 mt-1">CGPA: 7.92 (A+)</p>
-                    </div>
-                `
-            },
-            skills: {
-                title: 'Skills & Expertise',
-                icon: 'code',
-                content: `
-                    <div class="space-y-4">
-                        <div>
-                            <h4 class="font-bold text-white mb-3 text-sm uppercase tracking-wider">Design & Research</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1.5 bg-blue-500 bg-opacity-20 text-blue-300 border border-blue-500 border-opacity-30 rounded-lg text-sm">Product Design & Strategy</span>
-                                <span class="px-3 py-1.5 bg-blue-500 bg-opacity-20 text-blue-300 border border-blu
+                        <p class="text-blue-400 font-semibold">Srisht
